@@ -15,6 +15,14 @@ async function cargarJSON() {
     //Iteramos producto por producto y los vamos agregando al contenedor de productos.
     //Guardamos los datos de cada producto en un div con la clase card
     data.forEach(producto => {
+
+      let precio = producto.price;
+      let nombre = producto.name.replace("'", "`");;
+
+      let objToPass = {
+        "price" : precio
+      }
+      let cadena = JSON.stringify(objToPass);
       contenedorProductos.innerHTML += `
       <div class="card">
           <div>
@@ -26,7 +34,7 @@ async function cargarJSON() {
           <br>
           <div id="desc" name="desc" class="desc">${producto.description}</div>
           <div>
-            <button onclick="addWishList(${producto.price},${producto.id})" class="button">Agregar 🛒</button>
+            <button onclick="addWishList(${cadena})" class="button">Agregar 🛒</button>
           </div>
       </div>
     `;
@@ -39,10 +47,15 @@ async function cargarJSON() {
 
 document.addEventListener('DOMContentLoaded', cargarJSON);
 
-function addWishList(price, id) {
+function addWishList(productoId) {
   try {
-  console.log(price);
-  console.log(id);
+    let prodJSON = JSON.parse(productoId);
+    console.log(prodJSON);
+    //Armamos el objeto a guardar en LocalStorage
+
+    //Guardamos el objeto en LocalStorage
+
+    //Recargamos la página
   } catch (error) {
     console.error("Error al procesar producto : ", error);
   }
